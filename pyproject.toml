@@ -1,0 +1,26 @@
+[project]
+name = "transformers-demo"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "yongketian@gmail.com", email = "tyk"},
+]
+dependencies = [
+    "transformers[sentencepiece]>=4.44.0",
+    "torch>=2.4.0",
+    "datasets>=2.20.0",
+    "evaluate>=0.4.2",
+    "accelerate>=0.33.0",
+]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "huggingface-hub[hf_transfer]>=0.24.5",
+]
