@@ -23,6 +23,12 @@ OR
 export PDM_PYPI_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
+##### 导出 requirements.txt
+
+```
+pdm export -o requirements.txt --without-hashes
+```
+
 #### HF配置
 
 ##### HF镜像
