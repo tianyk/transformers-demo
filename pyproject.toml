@@ -1,7 +1,7 @@
 [project]
 name = "transformers-demo"
 version = "0.1.0"
-description = "Default template for PDM package"
+description = "Learning transformers"
 authors = [
     {name = "yongketian@gmail.com", email = "tyk"},
 ]
