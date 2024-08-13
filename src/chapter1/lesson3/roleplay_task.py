@@ -1,8 +1,14 @@
 import torch
 import re
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, QuantoConfig
 
 from typing import Tuple
+
+from transformers.utils import is_accelerate_available, is_bitsandbytes_available
+
+print(is_accelerate_available())
+print(is_bitsandbytes_available())
+print(torch.backends.mps.is_available())
 
 def parse_chatml(chatml_content):
     pattern = re.compile(r'<\|im_start\|>(?:\s+)([a-zA-Z]+)(?:\s+)(.*?)<\|im_end\|>', re.DOTALL)
@@ -13,10 +19,15 @@ def parse_chatml(chatml_content):
     return messages
 
 def load_model() -> Tuple[AutoModelForCausalLM, AutoTokenizer]:
+    # 量化
+    # https://huggingface.co/docs/transformers/main/en/quantization/overview#when-to-use-what
+    # https://huggingface.co/docs/transformers/v4.44.0/en/quantization/quanto
+    quantization_config = QuantoConfig(eights="int8")
+
     model_name_or_path = "ClosedCharacter/Peach-9B-8k-Roleplay"
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=True)
     model = AutoModelForCausalLM.from_pretrained(
-        model_name_or_path, torch_dtype=torch.bfloat16, 
+        model_name_or_path, torch_dtype=torch.bfloat16, quantization_config=quantization_config,
         trust_remote_code=True, device_map="auto")
     return model, tokenizer
 
